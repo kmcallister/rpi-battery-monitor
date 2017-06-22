@@ -73,54 +73,56 @@ fn read_voltage() -> Result<f64, Error> {
     //
     // Keep this code tight because we're trying to capture
     // precise timings.
+    {
+        let _realtime = sched::Realtime::new();
 
-    // Wait for idle bus.
-    let t0 = precise_time_ns();
-    let mut tlast = t0;
-    loop {
-        let t = precise_time_ns();
-        if (t - t0) >= TIMEOUT_NS {
-            return Err(Error::TimeoutIdle);
-        }
-
-        if read() {
-            tlast = t;
-        } else if (t - tlast) >= IDLE_NS {
-            break;
-        }
-    }
-
-    // Wait for bus to go high: start of transmission.
-    let mut t0 = precise_time_ns();
-    loop {
-        let t = precise_time_ns();
-        if (t - t0) >= TIMEOUT_NS {
-            return Err(Error::TimeoutWait);
-        }
-
-        if read() {
-            t0 = t;
-            break;
-        }
-    }
-
-    // Record for the designated time period.
-    let mut state = true;
-    loop {
-        let t = precise_time_ns();
-        if (t - t0) >= RECORD_NS {
-            break;
-        }
-
-        if read() != state {
-            edges.push(t - t0);
-            if edges.len() > MAX_EDGES {
-                return Err(Error::TooManyEdges);
+        // Wait for idle bus.
+        let t0 = precise_time_ns();
+        let mut tlast = t0;
+        loop {
+            let t = precise_time_ns();
+            if (t - t0) >= TIMEOUT_NS {
+                return Err(Error::TimeoutIdle);
             }
-            state = !state;
+
+            if read() {
+                tlast = t;
+            } else if (t - tlast) >= IDLE_NS {
+                break;
+            }
+        }
+
+        // Wait for bus to go high: start of transmission.
+        let mut t0 = precise_time_ns();
+        loop {
+            let t = precise_time_ns();
+            if (t - t0) >= TIMEOUT_NS {
+                return Err(Error::TimeoutWait);
+            }
+
+            if read() {
+                t0 = t;
+                break;
+            }
+        }
+
+        // Record for the designated time period.
+        let mut state = true;
+        loop {
+            let t = precise_time_ns();
+            if (t - t0) >= RECORD_NS {
+                break;
+            }
+
+            if read() != state {
+                edges.push(t - t0);
+                if edges.len() > MAX_EDGES {
+                    return Err(Error::TooManyEdges);
+                }
+                state = !state;
+            }
         }
     }
-
     //
     // REALTIME SECTION ENDS HERE
     //
@@ -189,8 +191,6 @@ fn main() {
         Some(_) => panic!("unrecognized command line option"),
         None => (),
     }
-
-    sched::set_realtime();
 
     unsafe {
         gpio_init();
