@@ -4,7 +4,7 @@
 //  Dom and Gert
 //  Revised: 15-Feb-2013
 //
-//  Revised by Yours Truly 20-Jun-2017
+//  Munged into a very simple library by Keegan McAllister 20-Jun-2017
  
 #define BCM2708_PERI_BASE        0x3F000000
 #define GPIO_BASE                (BCM2708_PERI_BASE + 0x200000) /* GPIO controller */
