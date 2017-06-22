@@ -68,6 +68,12 @@ fn read_voltage() -> Result<f64, Error> {
     let mut edges = Vec::with_capacity(MAX_EDGES);
     edges.push(0);
 
+    //
+    // REALTIME SECTION BEGINS HERE
+    //
+    // Keep this code tight because we're trying to capture
+    // precise timings.
+
     // Wait for idle bus.
     let t0 = precise_time_ns();
     let mut tlast = t0;
@@ -115,7 +121,9 @@ fn read_voltage() -> Result<f64, Error> {
         }
     }
 
-    // Realtime-critical section ends here.
+    //
+    // REALTIME SECTION ENDS HERE
+    //
 
     if edges.len() < BITS {
         return Err(Error::TooFewEdges);
@@ -165,7 +173,8 @@ fn read_voltage() -> Result<f64, Error> {
     Ok(((val as f64) / MAX_ADC) * ((R1 + R2) / R2) * VCC)
 }
 
-const MUNIN_CONFIG: &'static str = include_str!("munin.cfg");
+const MUNIN_CONFIG: &'static str
+    = include_str!("munin.cfg");
 
 fn main() {
     let mut args = env::args();
