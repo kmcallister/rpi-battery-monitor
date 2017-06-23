@@ -7,7 +7,7 @@ where you can plot them, set up alerts, send them over the network or do
 anything else you want. This sort of thing has been done many times before, but
 you might find my approach interesting.
 
-# The hardware
+## The hardware
 
 Because the Raspberry Pi doesn't have an analog-to-digital converter, we need
 some kind of external component to take voltage readings.  Many people use
@@ -39,7 +39,7 @@ here. So the maximum battery voltage we can measure is
 
 Since the ADC reads 10 bits, the voltage resolution is 15.8 V / 1024 = 15.4 mV.
 
-# The software
+## The software
 
 The ATtiny13 sends an ADC sample to the RPi every 100 ms. There is no need for
 bidirectional communication, so I used just a single data line. However the
@@ -50,7 +50,7 @@ to recover the sender's bit clock. Each bit transmission takes 1 ms, divided
 into two halves for the Manchester code.  So the data rate is 1000 bps.
 
 Each transmission consists of 17 bits: a start bit which is always 1, a 10-bit
-ADC sample, and a 4-bit "signature". The signature provides some ability to
+ADC sample, and a 6-bit "signature". The signature provides some ability to
 detect garbled transmissions, and also ensures that the signal includes the
 necessary waveforms for clock recovery. The ADC sample is sent with the least
 significant bit first. Between transmissions, the bus is at 0 V, a logic low
@@ -70,7 +70,7 @@ lives on!
 I've tested this on a Raspberry Pi 3, however it's likely to work on other
 models as well.
 
-# Build and install
+## Build and install
 
 The ATtiny13 code is very simple and can be found in the [`avr/`](avr/) directory.
 To get the tools in Debian:
@@ -103,12 +103,12 @@ in the root directory of this repository. You will get a binary at
 `./target/release/rpi-battery-monitor`. Run it with no arguments
 to get a battery voltage reading.
 
-The binary uses two system features which require it to run as root:
+This program uses two system features which require it to run as root:
 
 * Direct access to GPIO registers through `/dev/mem`
 * Realtime scheduler priority while reading data
 
-# Munin setup
+## Munin setup
 
 `rpi-battery-monitor` can be used as a [Munin](http://munin-monitoring.org/)
 plugin to get pretty graphs. The plugin must run as root, and the
@@ -136,7 +136,7 @@ sudo service munin-node restart
 sudo -u munin /usr/share/munin/munin-html --debug
 ```
 
-# Configuration
+## Configuration
 
 If you want to put the sensor on a different RPi GPIO pin, edit `static const
 int pin` in [`src/cbits.c`](src/cbits.c). This uses the Broadcom GPIO numbering,
