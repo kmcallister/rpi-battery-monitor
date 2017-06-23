@@ -23,12 +23,14 @@ adapter.  But that's not essential to the operation of the circuit, as long as
 all the grounds are tied together.
 
 The positive terminal of the battery is connected to an analog input pin on the
-ATtiny13, through two resistors functioning as a [voltage divider](https://learn.sparkfun.com/tutorials/voltage-dividers).
-I measured these resistors myself which is why they're slightly off of the
-standard values. You can use any pair of resistors in approximately the same
-ratio.  However, if you make the resistors too small, the system will waste
-more power.  At these values, the divider will consume about 20 μA, which isn't
-much to an 85 amp-hour battery!
+ATtiny13, through two resistors functioning as a [voltage
+divider](https://learn.sparkfun.com/tutorials/voltage-dividers).  I measured
+these resistors myself which is why they're slightly off of the standard
+values. You can use any pair of resistors in approximately the same ratio.
+Just be sure to adjust the `R1` and `R2` values in
+[`src/main.rs`](src/main.rs). However, if you make the resistors too small, the
+system will waste more power.  At these values, the divider will consume about
+20 μA, which isn't much to an 85 amp-hour battery!
 
 The maximum analog reading on the ATtiny13 is equal to its supply voltage, 3.3 V
 here. So the maximum battery voltage we can measure is
