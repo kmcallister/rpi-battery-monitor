@@ -5,7 +5,10 @@
 //  Revised: 15-Feb-2013
 //
 //  Munged into a very simple library by Keegan McAllister 20-Jun-2017
- 
+
+// GPIO pin number to use. BCM numbering, not RPi connector numbering.
+static const int pin = 4;
+
 #define BCM2708_PERI_BASE        0x3F000000
 #define GPIO_BASE                (BCM2708_PERI_BASE + 0x200000) /* GPIO controller */
  
@@ -36,8 +39,6 @@ static volatile unsigned *gpio;
  
 #define GPIO_PULL *(gpio+37) // Pull up/pull down
 #define GPIO_PULLCLK0 *(gpio+38) // Pull up/pull down clock
-
-static const int pin = 4;
 
 // Set up a memory region to access GPIO
 void gpio_init() {

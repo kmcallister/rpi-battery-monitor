@@ -1,7 +1,13 @@
 [package]
-name = "battery-monitor"
+name = "rpi-battery-monitor"
 version = "0.1.0"
-authors = ["pi"]
+description = "Monitor battery voltage from a Raspberry Pi"
+repository = "https://github.com/kmcallister/rpi-battery-monitor"
+readme = "README.md"
+keywords = ["Raspberry Pi", "RPi", "battery", "munin"]
+categories = ["embedded"]
+license = "MIT/Apache-2.0"
+authors = ["Keegan McAllister <mcallister.keegan@gmail.com>"]
 
 [dependencies]
 libc = "0.2"
