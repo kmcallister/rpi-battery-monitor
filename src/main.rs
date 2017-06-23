@@ -2,6 +2,7 @@
 
 extern crate libc;
 extern crate time;
+extern crate errno;
 
 use std::env;
 use time::precise_time_ns;

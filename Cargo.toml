@@ -12,6 +12,7 @@ authors = ["Keegan McAllister <mcallister.keegan@gmail.com>"]
 [dependencies]
 libc = "0.2"
 time = "0.1"
+errno = "0.2"
 
 [build-dependencies]
 gcc = "0.3"
