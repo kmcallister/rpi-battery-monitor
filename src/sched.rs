@@ -8,7 +8,7 @@ impl Realtime {
     /// Enter a realtime scheduler context.
     ///
     /// Returns to the original scheduler on drop.
-    pub fn new() -> Realtime {
+    pub fn enter() -> Realtime {
         let policy = unsafe {
             libc::sched_getscheduler(0)
         };

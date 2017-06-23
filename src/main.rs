@@ -65,6 +65,9 @@ enum Error {
 
 // Take a single voltage reading from the sensor.
 fn read_voltage() -> Result<f64, Error> {
+    // We don't really need to allocate a new Vec for each reading.
+    // But it's out of the realtime path and the time spent in this
+    // function is dominated by waiting for data, anyway.
     let mut edges = Vec::with_capacity(MAX_EDGES);
     edges.push(0);
 
@@ -74,7 +77,7 @@ fn read_voltage() -> Result<f64, Error> {
     // Keep this code tight because we're trying to capture
     // precise timings.
     {
-        let _realtime = sched::Realtime::new();
+        let _realtime = sched::Realtime::enter();
 
         // Wait for idle bus.
         let t0 = precise_time_ns();
