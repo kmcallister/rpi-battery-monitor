@@ -39,6 +39,32 @@ here. So the maximum battery voltage we can measure is
 
 Since the ADC reads 10 bits, the voltage resolution is 15.8 V / 1024 = 15.4 mV.
 
+Here's the full setup:
+
+![Battery power setup with a large battery, USB power to a Raspberry Pi, and
+sensor hardware.](assets/setup.jpg)
+
+And a close-up of the sensor circuit:
+
+![A custom home-made circuit on perfboard, with a DIP-8 microcontroller, two
+resistors, and some wires held on with hot glue.](assets/closeup.jpg)
+
+Parts list, including powering the Pi:
+
+* Marine deep cycle battery from AutoZone
+* [12V fused plug socket with eyelet terminals](https://www.amazon.com/gp/product/B00G8WLW2Y)
+* [33W USB car charger](https://www.amazon.com/gp/product/B00OZ5OIFE)
+* [USB power meter](https://www.adafruit.com/product/2690)
+* [USB A to Micro-B cable](https://www.amazon.com/gp/product/B00NH13O7K)
+* [Raspberry Pi 3 Model B](https://www.adafruit.com/product/3055)
+* [Raspberry Pi case](https://www.adafruit.com/product/2253) with [lid](https://www.adafruit.com/product/2257)
+* 32 GB MicroSD card
+* 64 GB USB flash drive (much faster than MicroSD!)
+* Basic perfboard
+* [ATtiny13a in PDIP-8 package](http://www.mouser.com/search/ProductDetail.aspx?R=0virtualkey0virtualkeyATTINY13A-PU)
+* Two resistors
+* Miscellaneous wire
+
 ## The software
 
 The ATtiny13 sends an ADC sample to the RPi every 100 ms. There is no need for
