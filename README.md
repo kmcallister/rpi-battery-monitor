@@ -12,8 +12,8 @@ you might find my approach interesting.
 Because the Raspberry Pi doesn't have an analog-to-digital converter, we need
 some kind of external component to take voltage readings.  Many people use
 dedicated SPI or I²C ADC chips for this. I elected to use an
-[ATtiny13](http://www.atmel.com/images/doc2535.pdf) AVR microcontroller because
-it's what I had in my parts bin. Here's a schematic:
+[ATtiny13](http://www.mouser.com/ds/2/268/doc8126-1066157.pdf) AVR
+microcontroller because it's what I had in my parts bin. Here's a schematic:
 
 ![battery monitor circuit schematic](assets/schematic.png)
 
